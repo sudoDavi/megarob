@@ -10,7 +10,7 @@ public class Player : Node2D
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-
+		GD.Print("Intellisense is working now, for some reason");
 	}
 
 	//  // Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -18,4 +18,8 @@ public class Player : Node2D
 	//  {
 	//      
 	//  }
+	public override void _PhysicsProcess(float delta)
+	{
+
+	}
 }

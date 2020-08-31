@@ -3,15 +3,19 @@ using System;
 
 public class Player : Actor
 {
-	// Called when the node enters the scene tree for the first time.
+	private Position2D respawn;
 	public override void _Ready()
 	{
 		PlatformDetector = GetNode<RayCast2D>("PlatformDetector");
 		Animation = GetNode<AnimatedSprite>("Animation");
+		respawn = GetNode<Position2D>("/root/Main/Level1/Respawn");
 	}
 	public override void _PhysicsProcess(float delta)
 	{
 		HandleMovement(delta);
+
+		if (Input.IsActionJustPressed("respawn"))
+			this.Transform = respawn.Transform;
 	}
 
 	private Vector2 CalculateMoveVelocity(
@@ -35,7 +39,6 @@ public class Player : Actor
 	{
 		velocity.y += (int)Gravity * delta;
 	}
-
 	private void HandleAnimation(Vector2 lookDirection)
 	{
 		// Animation.Stop();

@@ -3,6 +3,7 @@ using System;
 
 public class Player : Actor
 {
+	[Export] public int Health = 10;
 	[Export] public Vector2 speed = new Vector2(150.0f, 250.0f);
 	public Vector2 velocity = Vector2.Zero;
 	public static bool HasGun = false;
@@ -17,6 +18,7 @@ public class Player : Actor
 		Animation = GetNode<AnimatedSprite>("Animation");
 		respawn = GetNode<Position2D>("/root/Main/Level1/Respawn");
 		gun = GetNode<Position2D>("Animation/Gun");
+		this.Transform = GetNode<Position2D>("/root/Main/Start").Transform;
 	}
 	public override void _PhysicsProcess(float delta)
 	{

@@ -3,6 +3,7 @@ using System;
 
 public class Dummy : Actor
 {
+	[Export] public int Health = 10;
 	public Vector2 velocity = Vector2.Zero;
 	private void ApplyGravity(float delta)
 	{
@@ -20,5 +21,14 @@ public class Dummy : Actor
 			FloorMaxAngle,
 			InfiniteInertia
 		);
+
+		if (Health <= 0)
+			this.QueueFree();
+	}
+
+	public void Hit(int damage)
+	{
+		GD.Print(this.Name, " Got hit took ", damage, " damage");
+		Health -= damage;
 	}
 }

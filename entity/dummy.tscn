@@ -34,4 +34,5 @@ enabled = true
 cast_to = Vector2( 0, 6 )
 
 [node name="Animation" type="AnimatedSprite" parent="."]
+modulate = Color( 0.105882, 0.0588235, 0.913725, 1 )
 frames = SubResource( 4 )

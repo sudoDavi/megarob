@@ -18,7 +18,8 @@ public class Shot : KinematicBody2D
 		KinematicCollision2D collision = MoveAndCollide(shotVector);
 		if (collision != null)
 		{
-			GD.Print(collision.ColliderId, collision.Collider);
+			if (collision.Collider.HasMethod("Hit"))
+				collision.Collider.Call("Hit", 5);
 			this.QueueFree();
 		}
 	}

@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public class L1VBlock : StaticBody2D
+public class VBlock : StaticBody2D
 {
 	private Area2D Trigger;
 	private CollisionShape2D Collider;

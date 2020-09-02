@@ -3,16 +3,25 @@ using System;
 
 public class Player : Actor
 {
-	private Position2D respawn;
+	[Export] public Vector2 speed = new Vector2(150.0f, 250.0f);
+	public Vector2 velocity = Vector2.Zero;
+	public static bool HasGun = false;
+	private static Position2D respawn;
+	private static Position2D gun;
+	private static float shotTime = 0.0f;
+	[Export] float ShotCap = 0.25f;
+	private static PackedScene shot = GD.Load<PackedScene>("res://player/shot.tscn");
 	public override void _Ready()
 	{
 		PlatformDetector = GetNode<RayCast2D>("PlatformDetector");
 		Animation = GetNode<AnimatedSprite>("Animation");
 		respawn = GetNode<Position2D>("/root/Main/Level1/Respawn");
+		gun = GetNode<Position2D>("Animation/Gun");
 	}
 	public override void _PhysicsProcess(float delta)
 	{
 		HandleMovement(delta);
+		HandleGun(delta);
 
 		if (Input.IsActionJustPressed("respawn"))
 			this.Transform = respawn.Transform;
@@ -41,16 +50,17 @@ public class Player : Actor
 	}
 	private void HandleAnimation(Vector2 lookDirection)
 	{
-		// Animation.Stop();
 		if (lookDirection.x > 0.0f)
 		{
 			Animation.FlipH = false;
 			Animation.Play();
+			gun.Position = new Vector2(6.5f, 0);
 		}
 		else if (lookDirection.x < 0.0f)
 		{
 			Animation.FlipH = true;
 			Animation.Play();
+			gun.Position = new Vector2(-6.5f, 0);
 		}
 		else
 			Animation.Stop();
@@ -79,6 +89,29 @@ public class Player : Actor
 		velocity = MoveAndSlideWithSnap(
 			velocity, snapVector, FloorNormal, StopOnSlopes, MaxSlides, FloorMaxAngle, InfiniteInertia
 		);
+	}
+
+	private void HandleGun(float delta)
+	{
+		shotTime += delta;
+		if (Input.IsActionPressed("shoot") && (shotTime >= ShotCap) && HasGun)
+		{
+			Shot firedShot = (Shot)shot.Instance();
+			firedShot.ShotDirection = Animation.FlipH ? -1 : 1;
+			firedShot.Transform = gun.GlobalTransform;
+			firedShot.AddCollisionExceptionWith(this);
+			GetParent().AddChild(firedShot);
+
+			GD.Print("Shot");
+
+			shotTime = 0.0f;
+		}
+	}
+
+	public void PickupGun()
+	{
+		GD.Print("Got Gun");
+		HasGun = true;
 	}
 
 

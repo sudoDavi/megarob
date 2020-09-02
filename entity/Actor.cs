@@ -3,7 +3,6 @@ using System;
 
 public class Actor : KinematicBody2D
 {
-	[Export] public Vector2 speed = new Vector2(150.0f, 250.0f);
 	[Export] public int MaxSlides = 4;
 	[Export] public float FloorMaxAngle = 0.9f;
 	[Export] public bool InfiniteInertia = false;
@@ -21,6 +20,4 @@ public class Actor : KinematicBody2D
 	{
 		get { return new Vector2(0.0f, 10.0f); }
 	}
-
-	public Vector2 velocity = Vector2.Zero;
 }

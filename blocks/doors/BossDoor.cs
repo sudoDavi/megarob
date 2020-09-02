@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public class Level1BossDoor : StaticBody2D
+public class BossDoor : StaticBody2D
 {
 	private Area2D Trigger;
 	private CollisionShape2D Collider;
@@ -18,7 +18,7 @@ public class Level1BossDoor : StaticBody2D
 		Collider.Disabled = true;
 	}
 
-	public virtual void _on_BodyEnter(Node2D body)
+	public void _on_BodyEnter(Node2D body)
 	{
 		sprite.Visible = true;
 		Collider.CallDeferred("set", "disabled", false);

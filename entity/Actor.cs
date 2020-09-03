@@ -16,8 +16,5 @@ public class Actor : KinematicBody2D
 		get { return Vector2.Up; }
 	}
 
-	public Vector2 FloorDetectDistance
-	{
-		get { return new Vector2(0.0f, 10.0f); }
-	}
+	[Export] public Vector2 FloorDetectDistance = new Vector2(0.0f, 5.0f);
 }

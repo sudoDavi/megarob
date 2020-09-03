@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://player/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://DefaultTileMap.tres" type="TileSet" id=2]
@@ -10,6 +10,8 @@
 [ext_resource path="res://player/gun_pickup.tscn" type="PackedScene" id=8]
 [ext_resource path="res://entity/dummy.tscn" type="PackedScene" id=9]
 [ext_resource path="res://blocks/special_blocks/cracked_block.tscn" type="PackedScene" id=10]
+[ext_resource path="res://player/d_jump_pickup.tscn" type="PackedScene" id=11]
+[ext_resource path="res://player/DJumpPickup.cs" type="Script" id=12]
 
 [node name="Main" type="Node2D"]
 __meta__ = {
@@ -17,7 +19,7 @@ __meta__ = {
 }
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
-position = Vector2( 544, 464 )
+position = Vector2( 664, 448 )
 collision_layer = 3
 collision_mask = 3
 
@@ -69,9 +71,13 @@ __meta__ = {
 
 [node name="TileMap" type="TileMap" parent="TestLevel"]
 tile_set = ExtResource( 2 )
-cell_size = Vector2( 16, 16 )
+cell_size = Vector2( 16, 8 )
 format = 1
-tile_data = PoolIntArray( -393184, 2, 0, -327648, 2, 0, -262112, 2, 0, -196588, 2, 0, -196587, 2, 0, -196586, 2, 0, -196585, 2, 0, -196584, 2, 0, -196583, 2, 0, -196582, 2, 0, -196581, 2, 0, -196580, 2, 0, -196579, 2, 0, -196578, 2, 0, -196577, 2, 0, -196576, 2, 0 )
+tile_data = PoolIntArray( -393184, 2, 0, -327648, 2, 0, -262112, 2, 0, -196588, 2, 0, -196587, 2, 0, -196586, 2, 0, -196585, 2, 0, -196584, 2, 0, -196583, 2, 0, -196582, 2, 0, -196581, 2, 0, -196580, 2, 0, -196579, 2, 0, -196578, 2, 0, -196577, 2, 0, -196576, 2, 0, 3014695, 4, 0, 3014696, 4, 0, 3014697, 4, 0, 3014698, 4, 0, 3014699, 4, 0, 3014700, 4, 0, 3014701, 4, 0, 3014702, 4, 0, 3014703, 4, 0, 3014704, 4, 0, 3014705, 4, 0, 3014706, 4, 0, 3014707, 4, 0, 3014708, 4, 0, 3014709, 4, 0, 3014710, 4, 0, 3014711, 4, 0, 3014712, 4, 0, 3014713, 4, 0, 3014714, 4, 0, 3014715, 4, 0, 3014716, 4, 0, 3014717, 4, 0, 3014718, 4, 0, 3014719, 4, 0, 3014720, 4, 0, 3014721, 4, 0, 3014722, 4, 0, 3014723, 4, 0, 3014724, 4, 0, 3014725, 4, 0, 3014726, 4, 0, 3014727, 4, 0, 3014728, 4, 0, 3014729, 4, 0, 3014730, 4, 0, 3014731, 4, 0, 3014732, 4, 0, 3014733, 4, 0, 3014734, 4, 0, 3014735, 4, 0, 3014736, 4, 0, 3014737, 4, 0, 3014738, 4, 0, 3014739, 4, 0, 3014740, 4, 0, 3014741, 4, 0, 3014742, 4, 0, 3014743, 4, 0, 3014744, 4, 0, 3014745, 4, 0, 3014746, 4, 0, 3014747, 4, 0, 3014748, 4, 0, 3014749, 4, 0, 3014750, 4, 0, 3014751, 4, 0, 3014752, 4, 0 )
+
+[node name="DJumpPickup" parent="TestLevel" instance=ExtResource( 11 )]
+position = Vector2( 792, 360 )
+script = ExtResource( 12 )
 
 [node name="Start" type="Position2D" parent="."]
 position = Vector2( 544, 464 )

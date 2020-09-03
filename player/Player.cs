@@ -7,6 +7,8 @@ public class Player : Actor
 	[Export] public Vector2 speed = new Vector2(150.0f, 250.0f);
 	public Vector2 velocity = Vector2.Zero;
 	public static bool HasGun = false;
+	public static bool HasDJmp = false;
+	private static bool canDJmp = true;
 	private static Position2D respawn;
 	private static Position2D gun;
 	private static float shotTime = 0.0f;
@@ -71,7 +73,20 @@ public class Player : Actor
 	{
 		ApplyGravity(delta);
 
-		float willJump = IsOnFloor() && Input.IsActionJustPressed("jump") ? -1 : 0;
+		float willJump = 0.0f;
+		if (Input.IsActionJustPressed("jump"))
+		{
+			if (IsOnFloor())
+			{
+				willJump = -1.0f;
+				canDJmp = true;
+			}
+			else if (canDJmp && HasDJmp)
+			{
+				willJump = -1.0f;
+				canDJmp = false;
+			}
+		}
 		Vector2 direction = new Vector2(
 			Input.GetActionStrength("move_right") - Input.GetActionStrength("move_left"),
 			willJump
@@ -96,15 +111,19 @@ public class Player : Actor
 	private void HandleGun(float delta)
 	{
 		shotTime += delta;
-		if (Input.IsActionPressed("shoot") && (shotTime >= ShotCap) && HasGun)
+		bool shotCap = GetTree().GetNodesInGroup("player_shot").Count < 3;
+		if (Input.IsActionJustPressed("shoot")
+			&& (shotTime >= ShotCap)
+			&& HasGun
+			&& shotCap
+		)
 		{
 			Shot firedShot = (Shot)shot.Instance();
 			firedShot.ShotDirection = Animation.FlipH ? -1 : 1;
 			firedShot.Transform = gun.GlobalTransform;
 			firedShot.AddCollisionExceptionWith(this);
+			firedShot.AddToGroup("player_shot");
 			GetParent().AddChild(firedShot);
-
-			GD.Print("Shot");
 
 			shotTime = 0.0f;
 		}
@@ -116,5 +135,9 @@ public class Player : Actor
 		HasGun = true;
 	}
 
-
+	public void PickupDJmp()
+	{
+		GD.Print("Got DJmp");
+		HasDJmp = true;
+	}
 }

@@ -5,7 +5,7 @@ public class Player : Actor
 {
 	[Export] public int Health = 10;
 	[Export] public Vector2 speed = new Vector2(150.0f, 250.0f);
-	public Vector2 velocity = Vector2.Zero;
+	public int IsInLevel { get; set; }
 	public static bool HasGun = false;
 	public static bool HasDJmp = false;
 	private static bool canDJmp = true;
@@ -29,23 +29,6 @@ public class Player : Actor
 
 		if (Input.IsActionJustPressed("respawn"))
 			this.Transform = respawn.Transform;
-	}
-
-	private Vector2 CalculateMoveVelocity(
-		Vector2 linearVelocity, Vector2 direction, Vector2 speed, bool isJumpInterrupted
-	)
-	{
-		Vector2 _velocity = linearVelocity;
-		_velocity.x = speed.x * direction.x;
-
-		if (direction.y != 0.0f)
-			_velocity.y = speed.y * direction.y;
-		if (isJumpInterrupted)
-			// Decrease the Y velocity by multiplying it, but don't set it to 0
-			// as to not be too abrupt.
-			_velocity.y *= 0.6f;
-
-		return _velocity;
 	}
 
 	private void ApplyGravity(float delta)

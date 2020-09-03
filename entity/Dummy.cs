@@ -4,7 +4,6 @@ using System;
 public class Dummy : Actor
 {
 	[Export] public int Health = 10;
-	public Vector2 velocity = Vector2.Zero;
 	private void ApplyGravity(float delta)
 	{
 		velocity.y += (int)Gravity * delta;

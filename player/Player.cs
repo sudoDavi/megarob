@@ -3,9 +3,9 @@ using System;
 
 public class Player : Actor
 {
-	[Export] public int Health = 10;
-	[Export] public Vector2 speed = new Vector2(150.0f, 250.0f);
-	public int IsInLevel { get; set; }
+	[Export] public int PlayerDamage = 3;
+	public bool MovementDisabled = false;
+	public int IsInLevel = 1;
 	public static bool HasGun = false;
 	public static bool HasDJmp = false;
 	private static bool canDJmp = true;
@@ -14,16 +14,18 @@ public class Player : Actor
 	private static float shotTime = 0.0f;
 	[Export] float ShotCap = 0.25f;
 	private static PackedScene shot = GD.Load<PackedScene>("res://player/shot.tscn");
+	private static PackedScene level1 = GD.Load<PackedScene>("res://Level1.tscn");
 	public override void _Ready()
 	{
 		PlatformDetector = GetNode<RayCast2D>("PlatformDetector");
 		Animation = GetNode<AnimatedSprite>("Animation");
-		respawn = GetNode<Position2D>("/root/Main/Level1/Respawn");
 		gun = GetNode<Position2D>("Animation/Gun");
-		this.Transform = GetNode<Position2D>("/root/Main/Start").Transform;
+		this.Transform = GetNode<Position2D>("/root/Main/Level1/Start").Transform;
 	}
 	public override void _PhysicsProcess(float delta)
 	{
+		base._PhysicsProcess(delta);
+
 		HandleMovement(delta);
 		HandleGun(delta);
 
@@ -31,10 +33,6 @@ public class Player : Actor
 			this.Transform = respawn.Transform;
 	}
 
-	private void ApplyGravity(float delta)
-	{
-		velocity.y += (int)Gravity * delta;
-	}
 	private void HandleAnimation(Vector2 lookDirection)
 	{
 		if (lookDirection.x > 0.0f)
@@ -54,8 +52,6 @@ public class Player : Actor
 	}
 	private void HandleMovement(float delta)
 	{
-		ApplyGravity(delta);
-
 		float willJump = 0.0f;
 		if (Input.IsActionJustPressed("jump"))
 		{
@@ -74,6 +70,8 @@ public class Player : Actor
 			Input.GetActionStrength("move_right") - Input.GetActionStrength("move_left"),
 			willJump
 		);
+		if (MovementDisabled)
+			direction = Vector2.Zero;
 		Vector2 snapVector;
 		if (direction.y == 0.0f)
 			snapVector = Vector2.Down * FloorDetectDistance;
@@ -81,13 +79,13 @@ public class Player : Actor
 			snapVector = Vector2.Zero;
 		HandleAnimation(direction);
 
-		bool isJumpInterrupted = Input.IsActionJustPressed("jump") && velocity.y < 0.0f;
-		velocity = CalculateMoveVelocity(velocity, direction, speed, isJumpInterrupted);
+		bool isJumpInterrupted = Input.IsActionJustPressed("jump") && Velocity.y < 0.0f;
+		Velocity = CalculateMoveVelocity(Velocity, direction, Speed, isJumpInterrupted);
 
 		StopOnSlopes = !PlatformDetector.IsColliding();
 
-		velocity = MoveAndSlideWithSnap(
-			velocity, snapVector, FloorNormal, StopOnSlopes, MaxSlides, FloorMaxAngle, InfiniteInertia
+		Velocity = MoveAndSlideWithSnap(
+			Velocity, snapVector, FloorNormal, StopOnSlopes, MaxSlides, FloorMaxAngle, InfiniteInertia
 		);
 	}
 
@@ -104,12 +102,20 @@ public class Player : Actor
 			Shot firedShot = (Shot)shot.Instance();
 			firedShot.ShotDirection = Animation.FlipH ? -1 : 1;
 			firedShot.Transform = gun.GlobalTransform;
+			firedShot.ShotDamage = PlayerDamage;
 			firedShot.AddCollisionExceptionWith(this);
 			firedShot.AddToGroup("player_shot");
 			GetParent().AddChild(firedShot);
 
 			shotTime = 0.0f;
 		}
+	}
+
+	public override void Die()
+	{
+		this.Transform =
+			GetNode<Position2D>($"/root/Main/Level{IsInLevel}/Start").Transform;
+		Health = 10;
 	}
 
 	public void PickupGun()

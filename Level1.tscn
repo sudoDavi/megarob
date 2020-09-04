@@ -1,29 +1,29 @@
 [gd_scene load_steps=24 format=2]
 
-[ext_resource path="res://player/Player.tscn" type="PackedScene" id=1]
-[ext_resource path="res://DefaultTileMap.tres" type="TileSet" id=2]
-[ext_resource path="res://player/GunPickup.cs" type="Script" id=3]
-[ext_resource path="res://blocks/special_blocks/VBlock.cs" type="Script" id=4]
-[ext_resource path="res://blocks/doors/BossDoor.cs" type="Script" id=5]
-[ext_resource path="res://blocks/doors/door.tscn" type="PackedScene" id=6]
-[ext_resource path="res://blocks/special_blocks/vanishing_block.tscn" type="PackedScene" id=7]
-[ext_resource path="res://player/gun_pickup.tscn" type="PackedScene" id=8]
-[ext_resource path="res://entity/dummy.tscn" type="PackedScene" id=9]
-[ext_resource path="res://entity/level_detector.tscn" type="PackedScene" id=11]
-[ext_resource path="res://blocks/sprites/block.png" type="Texture" id=12]
-[ext_resource path="res://entity/LevelDetector.cs" type="Script" id=13]
-[ext_resource path="res://entity/enemies/boss1.tscn" type="PackedScene" id=14]
-[ext_resource path="res://entity/enemies/Boss1.cs" type="Script" id=15]
-[ext_resource path="res://entity/BossTrigger.cs" type="Script" id=16]
-[ext_resource path="res://entity/boss_trigger.tscn" type="PackedScene" id=17]
-[ext_resource path="res://blocks/sprites/sprites.png" type="Texture" id=18]
-[ext_resource path="res://blocks/special_blocks/BossArena.cs" type="Script" id=19]
+[ext_resource path="res://DefaultTileMap.tres" type="TileSet" id=1]
+[ext_resource path="res://entity/BossTrigger.cs" type="Script" id=2]
+[ext_resource path="res://blocks/special_blocks/BossArena.cs" type="Script" id=3]
+[ext_resource path="res://entity/enemies/Boss1.cs" type="Script" id=4]
+[ext_resource path="res://entity/LevelDetector.cs" type="Script" id=5]
+[ext_resource path="res://blocks/sprites/block.png" type="Texture" id=6]
+[ext_resource path="res://blocks/sprites/sprites.png" type="Texture" id=7]
+[ext_resource path="res://player/GunPickup.cs" type="Script" id=8]
+[ext_resource path="res://blocks/special_blocks/VBlock.cs" type="Script" id=9]
+[ext_resource path="res://blocks/doors/BossDoor.cs" type="Script" id=10]
+[ext_resource path="res://entity/Dummy.cs" type="Script" id=11]
+[ext_resource path="res://entity/enemies/boss1.tscn" type="PackedScene" id=12]
+[ext_resource path="res://entity/dummy.tscn" type="PackedScene" id=13]
+[ext_resource path="res://player/gun_pickup.tscn" type="PackedScene" id=14]
+[ext_resource path="res://blocks/special_blocks/vanishing_block.tscn" type="PackedScene" id=15]
+[ext_resource path="res://entity/level_detector.tscn" type="PackedScene" id=16]
+[ext_resource path="res://blocks/doors/door.tscn" type="PackedScene" id=17]
+[ext_resource path="res://entity/boss_trigger.tscn" type="PackedScene" id=18]
 
 [sub_resource type="RectangleShape2D" id=4]
 extents = Vector2( 8, 8 )
 
 [sub_resource type="AtlasTexture" id=3]
-atlas = ExtResource( 18 )
+atlas = ExtResource( 7 )
 region = Rect2( 0, 24, 16, 8.09212 )
 
 [sub_resource type="RectangleShape2D" id=5]
@@ -35,22 +35,10 @@ extents = Vector2( 8, 8 )
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 8, 8 )
 
-[node name="Main" type="Node2D"]
-__meta__ = {
-"_edit_lock_": true
-}
+[node name="Level1" type="Node2D"]
 
-[node name="Player" parent="." groups=[
-"Player",
-] instance=ExtResource( 1 )]
-position = Vector2( 600, 464 )
-collision_layer = 3
-collision_mask = 3
-
-[node name="Level1" type="Node2D" parent="."]
-
-[node name="TileMap" type="TileMap" parent="Level1"]
-tile_set = ExtResource( 2 )
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
 cell_size = Vector2( 16, 16 )
 collision_layer = 5
 collision_mask = 5
@@ -60,24 +48,21 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="SpecialBlocks" type="Node2D" parent="Level1"]
+[node name="SpecialBlocks" type="Node2D" parent="."]
 
-[node name="VBlock" parent="Level1/SpecialBlocks" instance=ExtResource( 7 )]
+[node name="VBlock" type="StaticBody2D" parent="SpecialBlocks" instance=ExtResource( 15 )]
 position = Vector2( 1248, 552 )
-script = ExtResource( 4 )
+script = ExtResource( 9 )
 
-[node name="Sprite" parent="Level1/SpecialBlocks/VBlock" index="0"]
-modulate = Color( 0.137255, 0.0862745, 0.0862745, 1 )
-
-[node name="GunPickup" parent="Level1/SpecialBlocks" instance=ExtResource( 8 )]
+[node name="GunPickup" type="Node2D" parent="SpecialBlocks" instance=ExtResource( 14 )]
 position = Vector2( 1040, 664 )
-script = ExtResource( 3 )
+script = ExtResource( 8 )
 
-[node name="BossArena" type="Node2D" parent="Level1/SpecialBlocks"]
-script = ExtResource( 19 )
+[node name="BossArena" type="Node2D" parent="SpecialBlocks"]
+script = ExtResource( 3 )
 IsInLevel = 1
 
-[node name="ABlock" type="StaticBody2D" parent="Level1/SpecialBlocks/BossArena" groups=[
+[node name="ABlock" type="StaticBody2D" parent="SpecialBlocks/BossArena" groups=[
 "L1BossArena",
 ]]
 position = Vector2( 1296, 624 )
@@ -86,19 +71,19 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="Sprite" type="Sprite" parent="Level1/SpecialBlocks/BossArena/ABlock"]
+[node name="Sprite" type="Sprite" parent="SpecialBlocks/BossArena/ABlock"]
 visible = false
 modulate = Color( 0.137255, 0.0862745, 0.0862745, 1 )
-texture = ExtResource( 12 )
+texture = ExtResource( 6 )
 __meta__ = {
 "_editor_description_": ""
 }
 
-[node name="Collider" type="CollisionShape2D" parent="Level1/SpecialBlocks/BossArena/ABlock"]
+[node name="Collider" type="CollisionShape2D" parent="SpecialBlocks/BossArena/ABlock"]
 shape = SubResource( 4 )
 disabled = true
 
-[node name="ABlock2" type="StaticBody2D" parent="Level1/SpecialBlocks/BossArena" groups=[
+[node name="ABlock2" type="StaticBody2D" parent="SpecialBlocks/BossArena" groups=[
 "L1BossArena",
 ]]
 position = Vector2( 1328, 592 )
@@ -107,16 +92,16 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="Sprite" type="Sprite" parent="Level1/SpecialBlocks/BossArena/ABlock2"]
+[node name="Sprite" type="Sprite" parent="SpecialBlocks/BossArena/ABlock2"]
 visible = false
 modulate = Color( 0.137255, 0.0862745, 0.0862745, 1 )
-texture = ExtResource( 12 )
+texture = ExtResource( 6 )
 
-[node name="Collider" type="CollisionShape2D" parent="Level1/SpecialBlocks/BossArena/ABlock2"]
+[node name="Collider" type="CollisionShape2D" parent="SpecialBlocks/BossArena/ABlock2"]
 shape = SubResource( 4 )
 disabled = true
 
-[node name="ABlock4" type="StaticBody2D" parent="Level1/SpecialBlocks/BossArena" groups=[
+[node name="ABlock4" type="StaticBody2D" parent="SpecialBlocks/BossArena" groups=[
 "L1BossArena",
 ]]
 position = Vector2( 1352, 568 )
@@ -125,16 +110,16 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="Sprite" type="Sprite" parent="Level1/SpecialBlocks/BossArena/ABlock4"]
+[node name="Sprite" type="Sprite" parent="SpecialBlocks/BossArena/ABlock4"]
 visible = false
 modulate = Color( 0.137255, 0.0862745, 0.0862745, 1 )
-texture = ExtResource( 12 )
+texture = ExtResource( 6 )
 
-[node name="Collider" type="CollisionShape2D" parent="Level1/SpecialBlocks/BossArena/ABlock4"]
+[node name="Collider" type="CollisionShape2D" parent="SpecialBlocks/BossArena/ABlock4"]
 shape = SubResource( 4 )
 disabled = true
 
-[node name="ABlock3" type="StaticBody2D" parent="Level1/SpecialBlocks/BossArena" groups=[
+[node name="ABlock3" type="StaticBody2D" parent="SpecialBlocks/BossArena" groups=[
 "L1BossArena",
 ]]
 position = Vector2( 1256, 648 )
@@ -143,16 +128,16 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="Sprite" type="Sprite" parent="Level1/SpecialBlocks/BossArena/ABlock3"]
+[node name="Sprite" type="Sprite" parent="SpecialBlocks/BossArena/ABlock3"]
 visible = false
 modulate = Color( 0.137255, 0.0862745, 0.0862745, 1 )
 texture = SubResource( 3 )
 
-[node name="Collider" type="CollisionShape2D" parent="Level1/SpecialBlocks/BossArena/ABlock3"]
+[node name="Collider" type="CollisionShape2D" parent="SpecialBlocks/BossArena/ABlock3"]
 shape = SubResource( 5 )
 disabled = true
 
-[node name="BossDoor7" type="StaticBody2D" parent="Level1/SpecialBlocks/BossArena" groups=[
+[node name="BossDoor7" type="StaticBody2D" parent="SpecialBlocks/BossArena" groups=[
 "L1BossArena",
 ]]
 position = Vector2( 1448, 552 )
@@ -161,14 +146,14 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="Sprite" type="Sprite" parent="Level1/SpecialBlocks/BossArena/BossDoor7"]
+[node name="Sprite" type="Sprite" parent="SpecialBlocks/BossArena/BossDoor7"]
 modulate = Color( 0.137255, 0.0862745, 0.0862745, 1 )
-texture = ExtResource( 12 )
+texture = ExtResource( 6 )
 
-[node name="Collider" type="CollisionShape2D" parent="Level1/SpecialBlocks/BossArena/BossDoor7"]
+[node name="Collider" type="CollisionShape2D" parent="SpecialBlocks/BossArena/BossDoor7"]
 shape = SubResource( 6 )
 
-[node name="BossDoor8" type="StaticBody2D" parent="Level1/SpecialBlocks/BossArena" groups=[
+[node name="BossDoor8" type="StaticBody2D" parent="SpecialBlocks/BossArena" groups=[
 "L1BossArena",
 ]]
 position = Vector2( 1464, 552 )
@@ -177,14 +162,14 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="Sprite" type="Sprite" parent="Level1/SpecialBlocks/BossArena/BossDoor8"]
+[node name="Sprite" type="Sprite" parent="SpecialBlocks/BossArena/BossDoor8"]
 modulate = Color( 0.137255, 0.0862745, 0.0862745, 1 )
-texture = ExtResource( 12 )
+texture = ExtResource( 6 )
 
-[node name="Collider" type="CollisionShape2D" parent="Level1/SpecialBlocks/BossArena/BossDoor8"]
+[node name="Collider" type="CollisionShape2D" parent="SpecialBlocks/BossArena/BossDoor8"]
 shape = SubResource( 1 )
 
-[node name="BossDoor9" type="StaticBody2D" parent="Level1/SpecialBlocks/BossArena" groups=[
+[node name="BossDoor9" type="StaticBody2D" parent="SpecialBlocks/BossArena" groups=[
 "L1BossArena",
 ]]
 position = Vector2( 1464, 536 )
@@ -193,14 +178,14 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="Sprite" type="Sprite" parent="Level1/SpecialBlocks/BossArena/BossDoor9"]
+[node name="Sprite" type="Sprite" parent="SpecialBlocks/BossArena/BossDoor9"]
 modulate = Color( 0.137255, 0.0862745, 0.0862745, 1 )
-texture = ExtResource( 12 )
+texture = ExtResource( 6 )
 
-[node name="Collider" type="CollisionShape2D" parent="Level1/SpecialBlocks/BossArena/BossDoor9"]
+[node name="Collider" type="CollisionShape2D" parent="SpecialBlocks/BossArena/BossDoor9"]
 shape = SubResource( 1 )
 
-[node name="BossDoor10" type="StaticBody2D" parent="Level1/SpecialBlocks/BossArena" groups=[
+[node name="BossDoor10" type="StaticBody2D" parent="SpecialBlocks/BossArena" groups=[
 "L1BossArena",
 ]]
 position = Vector2( 1464, 520 )
@@ -209,14 +194,14 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="Sprite" type="Sprite" parent="Level1/SpecialBlocks/BossArena/BossDoor10"]
+[node name="Sprite" type="Sprite" parent="SpecialBlocks/BossArena/BossDoor10"]
 modulate = Color( 0.137255, 0.0862745, 0.0862745, 1 )
-texture = ExtResource( 12 )
+texture = ExtResource( 6 )
 
-[node name="Collider" type="CollisionShape2D" parent="Level1/SpecialBlocks/BossArena/BossDoor10"]
+[node name="Collider" type="CollisionShape2D" parent="SpecialBlocks/BossArena/BossDoor10"]
 shape = SubResource( 1 )
 
-[node name="BossDoor11" type="StaticBody2D" parent="Level1/SpecialBlocks/BossArena" groups=[
+[node name="BossDoor11" type="StaticBody2D" parent="SpecialBlocks/BossArena" groups=[
 "L1BossArena",
 ]]
 position = Vector2( 1448, 536 )
@@ -225,14 +210,14 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="Sprite" type="Sprite" parent="Level1/SpecialBlocks/BossArena/BossDoor11"]
+[node name="Sprite" type="Sprite" parent="SpecialBlocks/BossArena/BossDoor11"]
 modulate = Color( 0.137255, 0.0862745, 0.0862745, 1 )
-texture = ExtResource( 12 )
+texture = ExtResource( 6 )
 
-[node name="Collider" type="CollisionShape2D" parent="Level1/SpecialBlocks/BossArena/BossDoor11"]
+[node name="Collider" type="CollisionShape2D" parent="SpecialBlocks/BossArena/BossDoor11"]
 shape = SubResource( 1 )
 
-[node name="BossDoor12" type="StaticBody2D" parent="Level1/SpecialBlocks/BossArena" groups=[
+[node name="BossDoor12" type="StaticBody2D" parent="SpecialBlocks/BossArena" groups=[
 "L1BossArena",
 ]]
 position = Vector2( 1448, 520 )
@@ -241,14 +226,14 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="Sprite" type="Sprite" parent="Level1/SpecialBlocks/BossArena/BossDoor12"]
+[node name="Sprite" type="Sprite" parent="SpecialBlocks/BossArena/BossDoor12"]
 modulate = Color( 0.137255, 0.0862745, 0.0862745, 1 )
-texture = ExtResource( 12 )
+texture = ExtResource( 6 )
 
-[node name="Collider" type="CollisionShape2D" parent="Level1/SpecialBlocks/BossArena/BossDoor12"]
+[node name="Collider" type="CollisionShape2D" parent="SpecialBlocks/BossArena/BossDoor12"]
 shape = SubResource( 1 )
 
-[node name="BossDoor13" type="StaticBody2D" parent="Level1/SpecialBlocks/BossArena" groups=[
+[node name="BossDoor13" type="StaticBody2D" parent="SpecialBlocks/BossArena" groups=[
 "L1BossArena",
 ]]
 position = Vector2( 1480, 552 )
@@ -257,14 +242,14 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="Sprite" type="Sprite" parent="Level1/SpecialBlocks/BossArena/BossDoor13"]
+[node name="Sprite" type="Sprite" parent="SpecialBlocks/BossArena/BossDoor13"]
 modulate = Color( 0.137255, 0.0862745, 0.0862745, 1 )
-texture = ExtResource( 12 )
+texture = ExtResource( 6 )
 
-[node name="Collider" type="CollisionShape2D" parent="Level1/SpecialBlocks/BossArena/BossDoor13"]
+[node name="Collider" type="CollisionShape2D" parent="SpecialBlocks/BossArena/BossDoor13"]
 shape = SubResource( 6 )
 
-[node name="BossDoor14" type="StaticBody2D" parent="Level1/SpecialBlocks/BossArena" groups=[
+[node name="BossDoor14" type="StaticBody2D" parent="SpecialBlocks/BossArena" groups=[
 "L1BossArena",
 ]]
 position = Vector2( 1496, 552 )
@@ -273,14 +258,14 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="Sprite" type="Sprite" parent="Level1/SpecialBlocks/BossArena/BossDoor14"]
+[node name="Sprite" type="Sprite" parent="SpecialBlocks/BossArena/BossDoor14"]
 modulate = Color( 0.137255, 0.0862745, 0.0862745, 1 )
-texture = ExtResource( 12 )
+texture = ExtResource( 6 )
 
-[node name="Collider" type="CollisionShape2D" parent="Level1/SpecialBlocks/BossArena/BossDoor14"]
+[node name="Collider" type="CollisionShape2D" parent="SpecialBlocks/BossArena/BossDoor14"]
 shape = SubResource( 1 )
 
-[node name="BossDoor15" type="StaticBody2D" parent="Level1/SpecialBlocks/BossArena" groups=[
+[node name="BossDoor15" type="StaticBody2D" parent="SpecialBlocks/BossArena" groups=[
 "L1BossArena",
 ]]
 position = Vector2( 1496, 536 )
@@ -289,14 +274,14 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="Sprite" type="Sprite" parent="Level1/SpecialBlocks/BossArena/BossDoor15"]
+[node name="Sprite" type="Sprite" parent="SpecialBlocks/BossArena/BossDoor15"]
 modulate = Color( 0.137255, 0.0862745, 0.0862745, 1 )
-texture = ExtResource( 12 )
+texture = ExtResource( 6 )
 
-[node name="Collider" type="CollisionShape2D" parent="Level1/SpecialBlocks/BossArena/BossDoor15"]
+[node name="Collider" type="CollisionShape2D" parent="SpecialBlocks/BossArena/BossDoor15"]
 shape = SubResource( 1 )
 
-[node name="BossDoor16" type="StaticBody2D" parent="Level1/SpecialBlocks/BossArena" groups=[
+[node name="BossDoor16" type="StaticBody2D" parent="SpecialBlocks/BossArena" groups=[
 "L1BossArena",
 ]]
 position = Vector2( 1496, 520 )
@@ -305,14 +290,14 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="Sprite" type="Sprite" parent="Level1/SpecialBlocks/BossArena/BossDoor16"]
+[node name="Sprite" type="Sprite" parent="SpecialBlocks/BossArena/BossDoor16"]
 modulate = Color( 0.137255, 0.0862745, 0.0862745, 1 )
-texture = ExtResource( 12 )
+texture = ExtResource( 6 )
 
-[node name="Collider" type="CollisionShape2D" parent="Level1/SpecialBlocks/BossArena/BossDoor16"]
+[node name="Collider" type="CollisionShape2D" parent="SpecialBlocks/BossArena/BossDoor16"]
 shape = SubResource( 1 )
 
-[node name="BossDoor17" type="StaticBody2D" parent="Level1/SpecialBlocks/BossArena" groups=[
+[node name="BossDoor17" type="StaticBody2D" parent="SpecialBlocks/BossArena" groups=[
 "L1BossArena",
 ]]
 position = Vector2( 1480, 536 )
@@ -321,14 +306,14 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="Sprite" type="Sprite" parent="Level1/SpecialBlocks/BossArena/BossDoor17"]
+[node name="Sprite" type="Sprite" parent="SpecialBlocks/BossArena/BossDoor17"]
 modulate = Color( 0.137255, 0.0862745, 0.0862745, 1 )
-texture = ExtResource( 12 )
+texture = ExtResource( 6 )
 
-[node name="Collider" type="CollisionShape2D" parent="Level1/SpecialBlocks/BossArena/BossDoor17"]
+[node name="Collider" type="CollisionShape2D" parent="SpecialBlocks/BossArena/BossDoor17"]
 shape = SubResource( 1 )
 
-[node name="BossDoor18" type="StaticBody2D" parent="Level1/SpecialBlocks/BossArena" groups=[
+[node name="BossDoor18" type="StaticBody2D" parent="SpecialBlocks/BossArena" groups=[
 "L1BossArena",
 ]]
 position = Vector2( 1480, 520 )
@@ -337,27 +322,27 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="Sprite" type="Sprite" parent="Level1/SpecialBlocks/BossArena/BossDoor18"]
+[node name="Sprite" type="Sprite" parent="SpecialBlocks/BossArena/BossDoor18"]
 modulate = Color( 0.137255, 0.0862745, 0.0862745, 1 )
-texture = ExtResource( 12 )
+texture = ExtResource( 6 )
 
-[node name="Collider" type="CollisionShape2D" parent="Level1/SpecialBlocks/BossArena/BossDoor18"]
+[node name="Collider" type="CollisionShape2D" parent="SpecialBlocks/BossArena/BossDoor18"]
 shape = SubResource( 1 )
 
-[node name="Doors" type="Node2D" parent="Level1"]
+[node name="Doors" type="Node2D" parent="."]
 
-[node name="BossDoor" parent="Level1/Doors" groups=[
+[node name="BossDoor" type="StaticBody2D" parent="Doors" groups=[
 "L1BossDoor",
-] instance=ExtResource( 6 )]
+] instance=ExtResource( 17 )]
 position = Vector2( 840, 552 )
-script = ExtResource( 5 )
+script = ExtResource( 10 )
+__meta__ = {
+"_edit_lock_": true
+}
 IsInLevel = 1
 HasTrigger = true
 
-[node name="CollisionShape2D" parent="Level1/Doors/BossDoor/Trigger" index="0"]
-position = Vector2( 56, -24 )
-
-[node name="BossDoor4" type="StaticBody2D" parent="Level1/Doors" groups=[
+[node name="BossDoor4" type="StaticBody2D" parent="Doors" groups=[
 "L1BossDoor",
 ]]
 position = Vector2( 856, 552 )
@@ -365,14 +350,14 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="Sprite" type="Sprite" parent="Level1/Doors/BossDoor4"]
+[node name="Sprite" type="Sprite" parent="Doors/BossDoor4"]
 modulate = Color( 0.137255, 0.0862745, 0.0862745, 1 )
-texture = ExtResource( 12 )
+texture = ExtResource( 6 )
 
-[node name="Collider" type="CollisionShape2D" parent="Level1/Doors/BossDoor4"]
+[node name="Collider" type="CollisionShape2D" parent="Doors/BossDoor4"]
 shape = SubResource( 1 )
 
-[node name="BossDoor5" type="StaticBody2D" parent="Level1/Doors" groups=[
+[node name="BossDoor5" type="StaticBody2D" parent="Doors" groups=[
 "L1BossDoor",
 ]]
 position = Vector2( 856, 536 )
@@ -380,14 +365,14 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="Sprite" type="Sprite" parent="Level1/Doors/BossDoor5"]
+[node name="Sprite" type="Sprite" parent="Doors/BossDoor5"]
 modulate = Color( 0.137255, 0.0862745, 0.0862745, 1 )
-texture = ExtResource( 12 )
+texture = ExtResource( 6 )
 
-[node name="Collider" type="CollisionShape2D" parent="Level1/Doors/BossDoor5"]
+[node name="Collider" type="CollisionShape2D" parent="Doors/BossDoor5"]
 shape = SubResource( 1 )
 
-[node name="BossDoor6" type="StaticBody2D" parent="Level1/Doors" groups=[
+[node name="BossDoor6" type="StaticBody2D" parent="Doors" groups=[
 "L1BossDoor",
 ]]
 position = Vector2( 856, 520 )
@@ -395,14 +380,14 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="Sprite" type="Sprite" parent="Level1/Doors/BossDoor6"]
+[node name="Sprite" type="Sprite" parent="Doors/BossDoor6"]
 modulate = Color( 0.137255, 0.0862745, 0.0862745, 1 )
-texture = ExtResource( 12 )
+texture = ExtResource( 6 )
 
-[node name="Collider" type="CollisionShape2D" parent="Level1/Doors/BossDoor6"]
+[node name="Collider" type="CollisionShape2D" parent="Doors/BossDoor6"]
 shape = SubResource( 1 )
 
-[node name="BossDoor2" type="StaticBody2D" parent="Level1/Doors" groups=[
+[node name="BossDoor2" type="StaticBody2D" parent="Doors" groups=[
 "L1BossDoor",
 ]]
 position = Vector2( 840, 536 )
@@ -410,14 +395,14 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="Sprite" type="Sprite" parent="Level1/Doors/BossDoor2"]
+[node name="Sprite" type="Sprite" parent="Doors/BossDoor2"]
 modulate = Color( 0.137255, 0.0862745, 0.0862745, 1 )
-texture = ExtResource( 12 )
+texture = ExtResource( 6 )
 
-[node name="Collider" type="CollisionShape2D" parent="Level1/Doors/BossDoor2"]
+[node name="Collider" type="CollisionShape2D" parent="Doors/BossDoor2"]
 shape = SubResource( 1 )
 
-[node name="BossDoor3" type="StaticBody2D" parent="Level1/Doors" groups=[
+[node name="BossDoor3" type="StaticBody2D" parent="Doors" groups=[
 "L1BossDoor",
 ]]
 position = Vector2( 840, 520 )
@@ -425,51 +410,37 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="Sprite" type="Sprite" parent="Level1/Doors/BossDoor3"]
+[node name="Sprite" type="Sprite" parent="Doors/BossDoor3"]
 modulate = Color( 0.137255, 0.0862745, 0.0862745, 1 )
-texture = ExtResource( 12 )
+texture = ExtResource( 6 )
 
-[node name="Collider" type="CollisionShape2D" parent="Level1/Doors/BossDoor3"]
+[node name="Collider" type="CollisionShape2D" parent="Doors/BossDoor3"]
 shape = SubResource( 1 )
 
-[node name="Dummy" parent="Level1" instance=ExtResource( 9 )]
+[node name="Dummy" type="KinematicBody2D" parent="." instance=ExtResource( 13 )]
 position = Vector2( 592, 528 )
+script = ExtResource( 11 )
 
-[node name="LevelDetector" parent="Level1" instance=ExtResource( 11 )]
+[node name="LevelDetector" type="Area2D" parent="." instance=ExtResource( 16 )]
 visible = false
-script = ExtResource( 13 )
+position = Vector2( 800, 544 )
+script = ExtResource( 5 )
 LevelNumber = 1
 
-[node name="Enemies" type="Node2D" parent="Level1"]
+[node name="Enemies" type="Node2D" parent="."]
 
-[node name="Boss1" parent="Level1/Enemies" instance=ExtResource( 14 )]
+[node name="Boss1" type="KinematicBody2D" parent="Enemies" instance=ExtResource( 12 )]
 position = Vector2( 1400, 648 )
-script = ExtResource( 15 )
+scale = Vector2( 2.5, 2.5 )
+script = ExtResource( 4 )
 
-[node name="BossTrigger" parent="Level1" instance=ExtResource( 17 )]
-script = ExtResource( 16 )
+[node name="BossTrigger" type="Area2D" parent="." instance=ExtResource( 18 )]
+position = Vector2( 1168, 640 )
+script = ExtResource( 2 )
 BossNumber = 1
 
-[node name="Start" type="Position2D" parent="Level1"]
+[node name="Start" type="Position2D" parent="."]
 position = Vector2( 600, 464 )
 __meta__ = {
 "_edit_lock_": true
 }
-
-[node name="TestLevel" type="Node2D" parent="."]
-__meta__ = {
-"_edit_lock_": true
-}
-
-[node name="TileMap" type="TileMap" parent="TestLevel"]
-tile_set = ExtResource( 2 )
-cell_size = Vector2( 16, 8 )
-format = 1
-tile_data = PoolIntArray( -393184, 2, 0, -327648, 2, 0, -262112, 2, 0, -196588, 2, 0, -196587, 2, 0, -196586, 2, 0, -196585, 2, 0, -196584, 2, 0, -196583, 2, 0, -196582, 2, 0, -196581, 2, 0, -196580, 2, 0, -196579, 2, 0, -196578, 2, 0, -196577, 2, 0, -196576, 2, 0 )
-__meta__ = {
-"_edit_lock_": true
-}
-
-[editable path="Level1/SpecialBlocks/VBlock"]
-
-[editable path="Level1/Doors/BossDoor"]

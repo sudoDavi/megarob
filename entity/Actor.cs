@@ -29,9 +29,6 @@ public class Actor : KinematicBody2D
 	public override void _PhysicsProcess(float delta)
 	{
 		ApplyGravity(delta);
-
-		if (Health <= 0)
-			Die();
 	}
 
 	public virtual Vector2 CalculateMoveVelocity(
@@ -60,5 +57,8 @@ public class Actor : KinematicBody2D
 	{
 		GD.Print(this.Name, " Got hit took ", damage, " damage");
 		Health -= damage;
+
+		if (Health <= 0)
+			Die();
 	}
 }

@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=2]
 
-[ext_resource path="res://entity/Dummy.cs" type="Script" id=1]
+[ext_resource path="res://entity/enemies/Boss1.cs" type="Script" id=1]
 [ext_resource path="res://entity/enemies/boss1.png" type="Texture" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
@@ -25,7 +25,9 @@ animations = [ {
 [sub_resource type="RectangleShape2D" id=5]
 extents = Vector2( 8.5, 8.5 )
 
-[node name="Boss1" type="KinematicBody2D"]
+[node name="Boss1" type="KinematicBody2D" groups=[
+"Boss1",
+]]
 position = Vector2( 648, 592 )
 scale = Vector2( 2.5, 2.5 )
 script = ExtResource( 1 )
@@ -38,7 +40,7 @@ enabled = true
 cast_to = Vector2( 0, 6 )
 
 [node name="Animation" type="AnimatedSprite" parent="."]
-modulate = Color( 0.14, 0.1246, 0.1246, 1 )
+modulate = Color( 0.141176, 0.12549, 0.12549, 1 )
 frames = SubResource( 4 )
 
 [node name="KillZone" type="Area2D" parent="."]

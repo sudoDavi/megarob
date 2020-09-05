@@ -13,7 +13,11 @@ public class BossDoor : StaticBody2D
 			Trigger = GetNode<Area2D>("Trigger");
 			Trigger.Connect("body_entered", this, nameof(_on_BodyEnter));
 
-			OpenDoor(GetTree().GetNodesInGroup("L" + IsInLevel + "BossDoor"));
+			var doors = GetTree().GetNodesInGroup("L" + IsInLevel + "BossDoor");
+			OpenDoor(doors);
+
+			if ((int)GetNode("/root/Main/Player").Get("KilledBoss") == IsInLevel)
+				CloseDoor(doors);
 		}
 	}
 
@@ -22,6 +26,7 @@ public class BossDoor : StaticBody2D
 		if (body.IsInGroup("Player") && (int)body.Get("IsInLevel") == IsInLevel)
 		{
 			CloseDoor(GetTree().GetNodesInGroup("L" + IsInLevel + "BossDoor"));
+			Trigger.SetDeferred("monitoring", false);
 		}
 	}
 

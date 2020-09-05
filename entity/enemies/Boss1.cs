@@ -3,11 +3,14 @@ using System;
 
 public class Boss1 : Actor
 {
-	[Export] public bool HasAwakened = false;
+	[Export] public bool HasAwakened;
 	private Area2D killZone;
+	private Node2D player;
 
 	public override void _Ready()
 	{
+		HasAwakened = false;
+		player = GetNode<Node2D>("/root/Main/Player");
 		Speed = new Vector2(50.0f, 0.0f);
 		Animation = GetNode<AnimatedSprite>("Animation");
 		Health = 20;
@@ -17,21 +20,22 @@ public class Boss1 : Actor
 	public override void _PhysicsProcess(float delta)
 	{
 		base._PhysicsProcess(delta);
-		if (this.IsQueuedForDeletion())
-		{
-			GetNode("/root/Main/Level1/SpecialBlocks/BossArena").Call("FreePlayer");
-		}
-
 		HandleMovement(delta);
+	}
+
+	public override void Die()
+	{
+		GetNode("/root/Main/Level1/SpecialBlocks/BossArena").Call("ChangeState");
+		GetNode("/root/Main/Level1/BossTrigger").Set("monitoring", false);
+		GetNode("/root/Main/Player").Set("KilledBoss", 1);
+
+		this.QueueFree();
 	}
 
 
 	private Vector2 CalculateDirection()
 	{
-		if (
-			GetNode<Node2D>("/root/Main/Player")
-				.GlobalPosition.x < this.GlobalPosition.x
-		)
+		if (player.GlobalPosition.x < this.GlobalPosition.x)
 			return Vector2.Left;
 		else
 			return Vector2.Right;
@@ -75,7 +79,7 @@ public class Boss1 : Actor
 		if (body.IsInGroup("Player"))
 		{
 			GD.Print("DIEEE");
-			body.Call("Die");
+			body.CallDeferred("Die");
 		}
 	}
 }

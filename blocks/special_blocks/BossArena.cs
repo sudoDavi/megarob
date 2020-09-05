@@ -4,9 +4,17 @@ using System;
 public class BossArena : Node2D
 {
 	[Export] public int IsInLevel = 0;
-
-	public void FreePlayer()
+	[Export] public bool StartFree = false;
+	public bool Active = true;
+	public override void _Ready()
 	{
+		if (StartFree)
+			ChangeState();
+	}
+
+	public void ChangeState()
+	{
+		Active = !Active;
 		foreach (Node node in GetTree().GetNodesInGroup($"L{IsInLevel}BossArena"))
 		{
 			bool spriteVisibility = node.GetNode<Sprite>("Sprite").Visible;

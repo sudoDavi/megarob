@@ -9,6 +9,7 @@ public class Player : Actor
 	public int KilledBoss = 0;
 	[Export] public bool HasGun = false;
 	[Export] public bool HasDJmp = false;
+	[Export] public bool HasKey = false;
 	private static bool canDJmp = true;
 	private static Vector2 respawn;
 	private static Position2D gun;
@@ -17,15 +18,16 @@ public class Player : Actor
 	private static PackedScene shot = GD.Load<PackedScene>("res://player/shot.tscn");
 	private static PackedScene level1 = GD.Load<PackedScene>("res://Level1.tscn");
 	private static PackedScene level2 = GD.Load<PackedScene>("res://Level2.tscn");
+	private static PackedScene level3 = GD.Load<PackedScene>("res://Level3.tscn");
 	public override void _Ready()
 	{
 		IsRespawning = false;
 		PlatformDetector = GetNode<RayCast2D>("PlatformDetector");
 		Animation = GetNode<AnimatedSprite>("Animation");
 		gun = GetNode<Position2D>("Animation/Gun");
-		respawn = GetNode<Position2D>($"/root/Main/Hub/Start{IsInLevel}")
-			.GlobalPosition;
-		this.GlobalPosition = respawn;
+		// respawn = GetNode<Position2D>($"/root/Main/Hub/Start{IsInLevel}")
+		// 	.GlobalPosition;
+		// this.GlobalPosition = respawn;
 	}
 	public override void _PhysicsProcess(float delta)
 	{
@@ -139,6 +141,12 @@ public class Player : Actor
 				HasGun = true;
 				HasDJmp = false;
 				break;
+			case 3:
+				loadedLevel = (Node2D)level3.Instance();
+				HasGun = true;
+				HasDJmp = true;
+				HasKey = false;
+				break;
 			default:
 				loadedLevel = new Node2D();
 				break;
@@ -157,5 +165,11 @@ public class Player : Actor
 	{
 		GD.Print("Got DJmp");
 		HasDJmp = true;
+	}
+
+	public void PickupKey()
+	{
+		GD.Print("Got Key");
+		HasKey = true;
 	}
 }

@@ -14,6 +14,7 @@ public class BossArena : Node2D
 
 	public void ChangeState()
 	{
+		GD.Print("change state called");
 		Active = !Active;
 		foreach (Node node in GetTree().GetNodesInGroup($"L{IsInLevel}BossArena"))
 		{

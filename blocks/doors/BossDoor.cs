@@ -16,7 +16,7 @@ public class BossDoor : StaticBody2D
 			var doors = GetTree().GetNodesInGroup("L" + IsInLevel + "BossDoor");
 			OpenDoor(doors);
 
-			if ((int)GetNode("/root/Main/Player").Get("KilledBoss") == IsInLevel)
+			if ((int)GetNode("/root/Main/Player").Get("KilledBoss") >= IsInLevel)
 				CloseDoor(doors);
 		}
 	}

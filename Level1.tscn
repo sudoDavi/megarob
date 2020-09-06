@@ -13,32 +13,34 @@
 [ext_resource path="res://player/gun_pickup.tscn" type="PackedScene" id=14]
 [ext_resource path="res://blocks/special_blocks/vanishing_block.tscn" type="PackedScene" id=15]
 [ext_resource path="res://blocks/doors/door.tscn" type="PackedScene" id=17]
-[ext_resource path="res://entity/boss_trigger.tscn" type="PackedScene" id=18]
-
-[sub_resource type="RectangleShape2D" id=8]
-extents = Vector2( 8, 8 )
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 8, 8 )
 
-[sub_resource type="AtlasTexture" id=2]
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 8, 8 )
+
+[sub_resource type="AtlasTexture" id=3]
 atlas = ExtResource( 7 )
 region = Rect2( 0, 24, 16, 8.09212 )
 
-[sub_resource type="RectangleShape2D" id=3]
+[sub_resource type="RectangleShape2D" id=4]
 extents = Vector2( 8, 4 )
 
-[sub_resource type="RectangleShape2D" id=4]
+[sub_resource type="RectangleShape2D" id=5]
 extents = Vector2( 8, 8 )
 
-[sub_resource type="RectangleShape2D" id=5]
+[sub_resource type="RectangleShape2D" id=6]
 extents = Vector2( 8, 8 )
 
 [sub_resource type="RectangleShape2D" id=7]
 extents = Vector2( 8, 8 )
 
-[sub_resource type="RectangleShape2D" id=6]
+[sub_resource type="RectangleShape2D" id=8]
 extents = Vector2( 848, 328 )
+
+[sub_resource type="RectangleShape2D" id=9]
+extents = Vector2( 264, 40 )
 
 [node name="Level1" type="Node2D" groups=[
 "L1",
@@ -91,7 +93,7 @@ __meta__ = {
 }
 
 [node name="Collider" type="CollisionShape2D" parent="SpecialBlocks/BossArena/ABlock"]
-shape = SubResource( 8 )
+shape = SubResource( 1 )
 disabled = true
 
 [node name="ABlock2" type="StaticBody2D" parent="SpecialBlocks/BossArena" groups=[
@@ -109,7 +111,7 @@ modulate = Color( 0.137255, 0.0862745, 0.0862745, 1 )
 texture = ExtResource( 6 )
 
 [node name="Collider" type="CollisionShape2D" parent="SpecialBlocks/BossArena/ABlock2"]
-shape = SubResource( 1 )
+shape = SubResource( 2 )
 disabled = true
 
 [node name="ABlock4" type="StaticBody2D" parent="SpecialBlocks/BossArena" groups=[
@@ -127,7 +129,7 @@ modulate = Color( 0.137255, 0.0862745, 0.0862745, 1 )
 texture = ExtResource( 6 )
 
 [node name="Collider" type="CollisionShape2D" parent="SpecialBlocks/BossArena/ABlock4"]
-shape = SubResource( 1 )
+shape = SubResource( 2 )
 disabled = true
 
 [node name="ABlock3" type="StaticBody2D" parent="SpecialBlocks/BossArena" groups=[
@@ -142,10 +144,10 @@ __meta__ = {
 [node name="Sprite" type="Sprite" parent="SpecialBlocks/BossArena/ABlock3"]
 visible = false
 modulate = Color( 0.137255, 0.0862745, 0.0862745, 1 )
-texture = SubResource( 2 )
+texture = SubResource( 3 )
 
 [node name="Collider" type="CollisionShape2D" parent="SpecialBlocks/BossArena/ABlock3"]
-shape = SubResource( 3 )
+shape = SubResource( 4 )
 disabled = true
 
 [node name="BossDoor7" type="StaticBody2D" parent="SpecialBlocks/BossArena" groups=[
@@ -162,7 +164,7 @@ modulate = Color( 0.137255, 0.0862745, 0.0862745, 1 )
 texture = ExtResource( 6 )
 
 [node name="Collider" type="CollisionShape2D" parent="SpecialBlocks/BossArena/BossDoor7"]
-shape = SubResource( 4 )
+shape = SubResource( 5 )
 
 [node name="BossDoor8" type="StaticBody2D" parent="SpecialBlocks/BossArena" groups=[
 "L1BossArena",
@@ -178,7 +180,7 @@ modulate = Color( 0.137255, 0.0862745, 0.0862745, 1 )
 texture = ExtResource( 6 )
 
 [node name="Collider" type="CollisionShape2D" parent="SpecialBlocks/BossArena/BossDoor8"]
-shape = SubResource( 5 )
+shape = SubResource( 6 )
 
 [node name="BossDoor9" type="StaticBody2D" parent="SpecialBlocks/BossArena" groups=[
 "L1BossArena",
@@ -194,7 +196,7 @@ modulate = Color( 0.137255, 0.0862745, 0.0862745, 1 )
 texture = ExtResource( 6 )
 
 [node name="Collider" type="CollisionShape2D" parent="SpecialBlocks/BossArena/BossDoor9"]
-shape = SubResource( 5 )
+shape = SubResource( 6 )
 
 [node name="BossDoor10" type="StaticBody2D" parent="SpecialBlocks/BossArena" groups=[
 "L1BossArena",
@@ -210,7 +212,7 @@ modulate = Color( 0.137255, 0.0862745, 0.0862745, 1 )
 texture = ExtResource( 6 )
 
 [node name="Collider" type="CollisionShape2D" parent="SpecialBlocks/BossArena/BossDoor10"]
-shape = SubResource( 5 )
+shape = SubResource( 6 )
 
 [node name="BossDoor11" type="StaticBody2D" parent="SpecialBlocks/BossArena" groups=[
 "L1BossArena",
@@ -226,7 +228,7 @@ modulate = Color( 0.137255, 0.0862745, 0.0862745, 1 )
 texture = ExtResource( 6 )
 
 [node name="Collider" type="CollisionShape2D" parent="SpecialBlocks/BossArena/BossDoor11"]
-shape = SubResource( 5 )
+shape = SubResource( 6 )
 
 [node name="BossDoor12" type="StaticBody2D" parent="SpecialBlocks/BossArena" groups=[
 "L1BossArena",
@@ -242,7 +244,7 @@ modulate = Color( 0.137255, 0.0862745, 0.0862745, 1 )
 texture = ExtResource( 6 )
 
 [node name="Collider" type="CollisionShape2D" parent="SpecialBlocks/BossArena/BossDoor12"]
-shape = SubResource( 5 )
+shape = SubResource( 6 )
 
 [node name="BossDoor13" type="StaticBody2D" parent="SpecialBlocks/BossArena" groups=[
 "L1BossArena",
@@ -258,7 +260,7 @@ modulate = Color( 0.137255, 0.0862745, 0.0862745, 1 )
 texture = ExtResource( 6 )
 
 [node name="Collider" type="CollisionShape2D" parent="SpecialBlocks/BossArena/BossDoor13"]
-shape = SubResource( 4 )
+shape = SubResource( 5 )
 
 [node name="BossDoor14" type="StaticBody2D" parent="SpecialBlocks/BossArena" groups=[
 "L1BossArena",
@@ -274,7 +276,7 @@ modulate = Color( 0.137255, 0.0862745, 0.0862745, 1 )
 texture = ExtResource( 6 )
 
 [node name="Collider" type="CollisionShape2D" parent="SpecialBlocks/BossArena/BossDoor14"]
-shape = SubResource( 5 )
+shape = SubResource( 6 )
 
 [node name="BossDoor15" type="StaticBody2D" parent="SpecialBlocks/BossArena" groups=[
 "L1BossArena",
@@ -290,7 +292,7 @@ modulate = Color( 0.137255, 0.0862745, 0.0862745, 1 )
 texture = ExtResource( 6 )
 
 [node name="Collider" type="CollisionShape2D" parent="SpecialBlocks/BossArena/BossDoor15"]
-shape = SubResource( 5 )
+shape = SubResource( 6 )
 
 [node name="BossDoor16" type="StaticBody2D" parent="SpecialBlocks/BossArena" groups=[
 "L1BossArena",
@@ -306,7 +308,7 @@ modulate = Color( 0.137255, 0.0862745, 0.0862745, 1 )
 texture = ExtResource( 6 )
 
 [node name="Collider" type="CollisionShape2D" parent="SpecialBlocks/BossArena/BossDoor16"]
-shape = SubResource( 5 )
+shape = SubResource( 6 )
 
 [node name="BossDoor17" type="StaticBody2D" parent="SpecialBlocks/BossArena" groups=[
 "L1BossArena",
@@ -322,7 +324,7 @@ modulate = Color( 0.137255, 0.0862745, 0.0862745, 1 )
 texture = ExtResource( 6 )
 
 [node name="Collider" type="CollisionShape2D" parent="SpecialBlocks/BossArena/BossDoor17"]
-shape = SubResource( 5 )
+shape = SubResource( 6 )
 
 [node name="BossDoor18" type="StaticBody2D" parent="SpecialBlocks/BossArena" groups=[
 "L1BossArena",
@@ -369,7 +371,7 @@ modulate = Color( 0.137255, 0.0862745, 0.0862745, 1 )
 texture = ExtResource( 6 )
 
 [node name="Collider" type="CollisionShape2D" parent="Doors/BossDoor4"]
-shape = SubResource( 5 )
+shape = SubResource( 6 )
 
 [node name="BossDoor5" type="StaticBody2D" parent="Doors" groups=[
 "L1BossDoor",
@@ -384,7 +386,7 @@ modulate = Color( 0.137255, 0.0862745, 0.0862745, 1 )
 texture = ExtResource( 6 )
 
 [node name="Collider" type="CollisionShape2D" parent="Doors/BossDoor5"]
-shape = SubResource( 5 )
+shape = SubResource( 6 )
 
 [node name="BossDoor6" type="StaticBody2D" parent="Doors" groups=[
 "L1BossDoor",
@@ -399,7 +401,7 @@ modulate = Color( 0.137255, 0.0862745, 0.0862745, 1 )
 texture = ExtResource( 6 )
 
 [node name="Collider" type="CollisionShape2D" parent="Doors/BossDoor6"]
-shape = SubResource( 5 )
+shape = SubResource( 6 )
 
 [node name="BossDoor2" type="StaticBody2D" parent="Doors" groups=[
 "L1BossDoor",
@@ -414,7 +416,7 @@ modulate = Color( 0.137255, 0.0862745, 0.0862745, 1 )
 texture = ExtResource( 6 )
 
 [node name="Collider" type="CollisionShape2D" parent="Doors/BossDoor2"]
-shape = SubResource( 5 )
+shape = SubResource( 6 )
 
 [node name="BossDoor3" type="StaticBody2D" parent="Doors" groups=[
 "L1BossDoor",
@@ -429,7 +431,7 @@ modulate = Color( 0.137255, 0.0862745, 0.0862745, 1 )
 texture = ExtResource( 6 )
 
 [node name="Collider" type="CollisionShape2D" parent="Doors/BossDoor3"]
-shape = SubResource( 5 )
+shape = SubResource( 6 )
 
 [node name="LevelDetector" type="Area2D" parent="."]
 modulate = Color( 0.521569, 1, 0, 0.278431 )
@@ -438,7 +440,7 @@ script = ExtResource( 5 )
 LevelNumber = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="LevelDetector"]
-shape = SubResource( 6 )
+shape = SubResource( 8 )
 
 [node name="Enemies" type="Node2D" parent="."]
 
@@ -446,8 +448,12 @@ shape = SubResource( 6 )
 position = Vector2( 1400, 648 )
 Health = 20
 
-[node name="BossTrigger" parent="." instance=ExtResource( 18 )]
+[node name="BossTrigger" type="Area2D" parent="."]
+position = Vector2( 1168, 640 )
 script = ExtResource( 2 )
 BossNumber = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BossTrigger"]
+shape = SubResource( 9 )
 
 [editable path="Doors/BossDoor"]

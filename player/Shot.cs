@@ -13,7 +13,8 @@ public class Shot : KinematicBody2D
 	{
 		shotVector = new Vector2((float)ShotDirection * ShotVelocity
 		, 0);
-		GetNode("IsDrawed").Connect("viewport_exited", this, nameof(_on_ScreenExit));
+		// Disabled so the game can be a little bit easier
+		// GetNode("IsDrawed").Connect("viewport_exited", this, nameof(_on_ScreenExit));
 	}
 
 	public override void _PhysicsProcess(float delta)

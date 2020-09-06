@@ -13,6 +13,7 @@ public class Actor : KinematicBody2D
 	public AnimatedSprite Animation;
 	public RayCast2D PlatformDetector;
 	public object Gravity = ProjectSettings.GetSetting("physics/2d/default_gravity");
+	public AudioStreamPlayer hitSound = new AudioStreamPlayer();
 
 	public Vector2 FloorNormal
 	{
@@ -57,6 +58,7 @@ public class Actor : KinematicBody2D
 	{
 		GD.Print(this.Name, " Got hit took ", damage, " damage");
 		Health -= damage;
+		hitSound.Play();
 
 		if (Health <= 0)
 			Die();

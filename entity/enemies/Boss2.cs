@@ -35,6 +35,7 @@ public class Boss2 : Actor
 		Health = 50;
 		hitZone = GetNode<Area2D>("HitZone");
 		hitZone.Connect("body_entered", this, nameof(_on_BodyEnter));
+		hitSound = GetNode<AudioStreamPlayer>("HitSound");
 
 		for (int i = 0; i < 5; i++)
 		{
@@ -122,6 +123,7 @@ public class Boss2 : Actor
 		GetNode("/root/Main/Level2/SpecialBlocks/BossArena").Call("ChangeState");
 		GetNode("/root/Main/Level2/BossTrigger").Set("monitoring", false);
 		GetNode("/root/Main/Player").Set("KilledBoss", 2);
+		GetNode("/root/Main/Player").Call("FightEnded");
 		var pickup = (Node2D)dJmpP.Instance();
 		pickup.GlobalPosition = this.GlobalPosition;
 		GetParent().AddChild(pickup);

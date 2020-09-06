@@ -1,7 +1,8 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://entity/enemies/Boss1.cs" type="Script" id=1]
 [ext_resource path="res://entity/enemies/boss1.png" type="Texture" id=2]
+[ext_resource path="res://sound/hit.wav" type="AudioStream" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 8, 8 )
@@ -31,6 +32,14 @@ extents = Vector2( 8.5, 8.5 )
 position = Vector2( 648, 592 )
 scale = Vector2( 2.5, 2.5 )
 script = ExtResource( 1 )
+Speed = null
+MaxSlides = null
+FloorMaxAngle = null
+InfiniteInertia = null
+StopOnSlopes = null
+Health = null
+FloorDetectDistance = null
+HasAwakened = null
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
@@ -47,3 +56,7 @@ frames = SubResource( 4 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="KillZone"]
 shape = SubResource( 5 )
+
+[node name="HitSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 3 )
+volume_db = -6.0

@@ -19,15 +19,25 @@ public class Player : Actor
 	private static PackedScene level1 = GD.Load<PackedScene>("res://Level1.tscn");
 	private static PackedScene level2 = GD.Load<PackedScene>("res://Level2.tscn");
 	private static PackedScene level3 = GD.Load<PackedScene>("res://Level3.tscn");
+	private AudioStreamPlayer ambient;
+	private AudioStreamPlayer boss;
+	private AudioStreamPlayer gunSound;
+	private AudioStreamPlayer jumpSound;
 	public override void _Ready()
 	{
 		IsRespawning = false;
 		PlatformDetector = GetNode<RayCast2D>("PlatformDetector");
 		Animation = GetNode<AnimatedSprite>("Animation");
 		gun = GetNode<Position2D>("Animation/Gun");
-		// respawn = GetNode<Position2D>($"/root/Main/Hub/Start{IsInLevel}")
-		// 	.GlobalPosition;
-		// this.GlobalPosition = respawn;
+		respawn = GetNode<Position2D>($"/root/Main/Hub/Start{IsInLevel}")
+			.GlobalPosition;
+		boss = GetNode<AudioStreamPlayer>("Boss");
+		ambient = GetNode<AudioStreamPlayer>("Ambient");
+		hitSound = GetNode<AudioStreamPlayer>("HitSound");
+		gunSound = GetNode<AudioStreamPlayer>("Animation/GunSound");
+		jumpSound = GetNode<AudioStreamPlayer>("Animation/JumpSound");
+
+		this.GlobalPosition = respawn;
 	}
 	public override void _PhysicsProcess(float delta)
 	{
@@ -64,11 +74,13 @@ public class Player : Actor
 		{
 			if (IsOnFloor())
 			{
+				jumpSound.Play();
 				willJump = -1.0f;
 				canDJmp = true;
 			}
 			else if (canDJmp && HasDJmp)
 			{
+				jumpSound.Play();
 				willJump = -1.0f;
 				canDJmp = false;
 			}
@@ -104,6 +116,7 @@ public class Player : Actor
 			&& shotCap
 		)
 		{
+			gunSound.Play();
 			Shot firedShot = (Shot)shot.Instance();
 			firedShot.ShotDirection = Animation.FlipH ? -1 : 1;
 			firedShot.Transform = gun.GlobalTransform;
@@ -123,6 +136,7 @@ public class Player : Actor
 		GetNode($"/root/Main/Level{IsInLevel}")
 			.Connect("tree_exited", this, nameof(_Respawn));
 		GetNode($"/root/Main/Level{IsInLevel}").QueueFree();
+		FightEnded();
 	}
 
 	public void _Respawn()
@@ -171,5 +185,17 @@ public class Player : Actor
 	{
 		GD.Print("Got Key");
 		HasKey = true;
+	}
+
+	public void IsFighting()
+	{
+		ambient.Stop();
+		boss.Play();
+	}
+
+	public void FightEnded()
+	{
+		ambient.Play();
+		boss.Stop();
 	}
 }

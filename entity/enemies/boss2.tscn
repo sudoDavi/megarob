@@ -1,7 +1,8 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://entity/enemies/Boss2.cs" type="Script" id=1]
 [ext_resource path="res://entity/enemies/boss2.png" type="Texture" id=2]
+[ext_resource path="res://sound/hit.wav" type="AudioStream" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 9, 5 )
@@ -36,6 +37,16 @@ animations = [ {
 [node name="Boss2" type="KinematicBody2D"]
 modulate = Color( 0.141176, 0.12549, 0.12549, 1 )
 script = ExtResource( 1 )
+Speed = null
+MaxSlides = null
+FloorMaxAngle = null
+InfiniteInertia = null
+StopOnSlopes = null
+Health = null
+FloorDetectDistance = null
+HasAwakened = null
+ShotRate = null
+bossDamage = null
 
 [node name="HitZone" type="Area2D" parent="."]
 monitorable = false
@@ -70,3 +81,7 @@ position = Vector2( 6, -2 )
 
 [node name="Gun4" type="Position2D" parent="."]
 position = Vector2( 7, 2 )
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 3 )
+volume_db = -6.0

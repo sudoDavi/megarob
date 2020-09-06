@@ -9,6 +9,7 @@ public class Boss1 : Actor
 
 	public override void _Ready()
 	{
+		hitSound = GetNode<AudioStreamPlayer>("HitSound");
 		HasAwakened = false;
 		player = GetNode<Node2D>("/root/Main/Player");
 		Speed = new Vector2(50.0f, 0.0f);
@@ -28,6 +29,8 @@ public class Boss1 : Actor
 		GetNode("/root/Main/Level1/SpecialBlocks/BossArena").Call("ChangeState");
 		GetNode("/root/Main/Level1/BossTrigger").Set("monitoring", false);
 		GetNode("/root/Main/Player").Set("KilledBoss", 1);
+		GetNode("/root/Main/Player").Call("FightEnded");
+		GetNode("/root/Main/Level1/Hints/destroy").QueueFree();
 
 		this.QueueFree();
 	}

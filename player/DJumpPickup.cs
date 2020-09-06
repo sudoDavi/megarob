@@ -4,6 +4,8 @@ using System;
 public class DJumpPickup : Node2D
 {
 	private Area2D pickupTrigger;
+	private Sprite doubleS;
+	private Sprite jump;
 
 	public override void _Ready()
 	{

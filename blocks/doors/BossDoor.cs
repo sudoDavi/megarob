@@ -25,6 +25,7 @@ public class BossDoor : StaticBody2D
 	{
 		if (body.IsInGroup("Player") && (int)body.Get("IsInLevel") == IsInLevel)
 		{
+			GD.Print("Triggered door");
 			CloseDoor(GetTree().GetNodesInGroup("L" + IsInLevel + "BossDoor"));
 			Trigger.SetDeferred("monitoring", false);
 		}
@@ -32,6 +33,7 @@ public class BossDoor : StaticBody2D
 
 	public void CloseDoor(Godot.Collections.Array doors)
 	{
+		GD.Print("Close door");
 		foreach (Node door in doors)
 		{
 			door.GetNode<Sprite>("Sprite").Visible = true;
@@ -42,6 +44,7 @@ public class BossDoor : StaticBody2D
 
 	public void OpenDoor(Godot.Collections.Array doors)
 	{
+		GD.Print("Open door");
 		foreach (Node door in doors)
 		{
 			door.GetNode<Sprite>("Sprite").Visible = false;

@@ -32,14 +32,6 @@ extents = Vector2( 8.5, 8.5 )
 position = Vector2( 648, 592 )
 scale = Vector2( 2.5, 2.5 )
 script = ExtResource( 1 )
-Speed = null
-MaxSlides = null
-FloorMaxAngle = null
-InfiniteInertia = null
-StopOnSlopes = null
-Health = null
-FloorDetectDistance = null
-HasAwakened = null
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )

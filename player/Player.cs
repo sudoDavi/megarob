@@ -132,15 +132,18 @@ public class Player : Actor
 	public override void Die()
 	{
 		IsRespawning = true;
-		GetTree().Paused = true;
-		GetNode($"/root/Main/Level{IsInLevel}")
-			.Connect("tree_exited", this, nameof(_Respawn));
+		GetTree().Paused = false;
+		GetNode("Timer")
+			.Connect("timeout", this, nameof(_Respawn));
+		GetNode<Timer>("Timer").Start();
+		GetNode<ColorRect>("/root/Main/Ui/GameUI/DeathScreen").Visible = true;
 		GetNode($"/root/Main/Level{IsInLevel}").QueueFree();
 		FightEnded();
 	}
 
 	public void _Respawn()
 	{
+		GetNode<ColorRect>("/root/Main/Ui/GameUI/DeathScreen").Visible = false;
 		GetTree().Paused = false;
 		this._Ready();
 		Node2D loadedLevel;

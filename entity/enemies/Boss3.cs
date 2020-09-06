@@ -108,6 +108,7 @@ public class Boss3 : Actor
 		GD.Print("Boss hit");
 		hitCounter++;
 		Health -= damage;
+		hitSound.Play();
 		if (Health <= 0)
 		{
 			Die();

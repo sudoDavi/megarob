@@ -18,7 +18,7 @@ extents = Vector2( 16, 40 )
 extents = Vector2( 592, 264 )
 
 [sub_resource type="RectangleShape2D" id=4]
-extents = Vector2( 24, 48 )
+extents = Vector2( 136, 48 )
 
 [node name="Level3" type="Node2D"]
 __meta__ = {
@@ -295,7 +295,7 @@ script = ExtResource( 1 )
 IsInLevel = 3
 
 [node name="BossTrigger" type="Area2D" parent="."]
-position = Vector2( 2840, 568 )
+position = Vector2( 2952, 568 )
 script = ExtResource( 7 )
 __meta__ = {
 "_edit_group_": true,

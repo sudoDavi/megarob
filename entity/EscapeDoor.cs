@@ -8,10 +8,13 @@ public class EscapeDoor : Node2D
 	private Area2D doorTrigger;
 	private Area2D consoleTrigger;
 	private AnimatedSprite consoleSprite;
+	private AnimatedSprite doorSprite;
 	private bool openDoor = false;
 	private bool playerEntered = false;
 	private Sprite need;
 	private Sprite key;
+	private Sprite f;
+	private Sprite press;
 
 	public override void _Ready()
 	{
@@ -19,8 +22,11 @@ public class EscapeDoor : Node2D
 		doorTrigger = GetNode<Area2D>("DoorTrigger");
 		consoleTrigger = GetNode<Area2D>("ConsoleTrigger");
 		consoleSprite = GetNode<AnimatedSprite>("Console");
+		doorSprite = GetNode<AnimatedSprite>("Door");
 		need = GetNode<Sprite>("need");
 		key = GetNode<Sprite>("key");
+		press = GetNode<Sprite>("press");
+		f = GetNode<Sprite>("f");
 
 		consoleTrigger.Connect("body_entered", this, nameof(_inputConsole));
 		consoleTrigger.Connect("body_exited", this, nameof(_consoleExit));
@@ -34,13 +40,20 @@ public class EscapeDoor : Node2D
 		if (hasKey && @event.IsActionPressed("use") && playerEntered)
 		{
 			consoleSprite.Frame = 1;
+			doorSprite.Frame = 1;
 			openDoor = true;
 		}
 	}
 
 	public void _inputConsole(Node2D body)
 	{
-		if (body.IsInGroup("Player"))
+		if (body.IsInGroup("Player") && (bool)player.Get("HasKey"))
+		{
+			playerEntered = true;
+			press.Visible = true;
+			f.Visible = true;
+		}
+		else if (body.IsInGroup("Player"))
 		{
 			playerEntered = true;
 			need.Visible = true;
@@ -55,6 +68,8 @@ public class EscapeDoor : Node2D
 			playerEntered = false;
 			need.Visible = false;
 			key.Visible = false;
+			press.Visible = false;
+			f.Visible = false;
 		}
 	}
 
@@ -63,7 +78,9 @@ public class EscapeDoor : Node2D
 		if (openDoor && body.IsInGroup("Player"))
 		{
 			GetNode<TextureRect>("/root/Main/Ui/EndScreen").Visible = true;
+			GetNode<Control>("/root/Main/Ui/GameUI").Visible = false;
 			GetNode<TextureRect>("/root/Main/Ui/MainMenu").SetProcess(false);
+			GetTree().Paused = true;
 		}
 	}
 }

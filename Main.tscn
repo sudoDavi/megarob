@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=2]
+[gd_scene load_steps=41 format=2]
 
 [ext_resource path="res://player/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://DefaultTileMap.tres" type="TileSet" id=2]
@@ -22,49 +22,61 @@
 [ext_resource path="res://ui/GameUI.cs" type="Script" id=20]
 [ext_resource path="res://ui/fs.png" type="Texture" id=21]
 [ext_resource path="res://ui/fsH.png" type="Texture" id=22]
+[ext_resource path="res://ui/press.png" type="Texture" id=23]
+[ext_resource path="res://blocks/doors/door2.png" type="Texture" id=24]
+[ext_resource path="res://ui/f.png" type="Texture" id=25]
+[ext_resource path="res://blocks/doors/outer_heaven.png" type="Texture" id=26]
 
-[sub_resource type="CapsuleShape2D" id=1]
-radius = 8.24609
-height = 25.2583
-
-[sub_resource type="AtlasTexture" id=2]
-atlas = ExtResource( 9 )
-region = Rect2( 0, 0, 8, 8 )
-
-[sub_resource type="AtlasTexture" id=3]
-atlas = ExtResource( 9 )
-region = Rect2( 8, 0, 8, 8 )
-
-[sub_resource type="SpriteFrames" id=4]
+[sub_resource type="SpriteFrames" id=1]
 animations = [ {
-"frames": [ SubResource( 2 ), SubResource( 3 ) ],
+"frames": [ ExtResource( 7 ), ExtResource( 24 ) ],
 "loop": true,
 "name": "default",
 "speed": 5.0
 } ]
 
-[sub_resource type="RectangleShape2D" id=5]
-extents = Vector2( 12.8037, 18.8828 )
+[sub_resource type="CapsuleShape2D" id=2]
+radius = 8.24609
+height = 25.2583
+
+[sub_resource type="AtlasTexture" id=3]
+atlas = ExtResource( 9 )
+region = Rect2( 0, 0, 8, 8 )
+
+[sub_resource type="AtlasTexture" id=4]
+atlas = ExtResource( 9 )
+region = Rect2( 8, 0, 8, 8 )
+
+[sub_resource type="SpriteFrames" id=5]
+animations = [ {
+"frames": [ SubResource( 3 ), SubResource( 4 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
 
 [sub_resource type="RectangleShape2D" id=6]
-extents = Vector2( 24, 56 )
+extents = Vector2( 12.8037, 18.8828 )
 
 [sub_resource type="RectangleShape2D" id=7]
+extents = Vector2( 24, 56 )
+
+[sub_resource type="RectangleShape2D" id=8]
 extents = Vector2( 24, 32 )
 
-[sub_resource type="DynamicFont" id=8]
+[sub_resource type="DynamicFont" id=9]
 font_data = ExtResource( 12 )
 
-[sub_resource type="DynamicFont" id=9]
+[sub_resource type="DynamicFont" id=10]
 size = 32
 extra_spacing_top = 4
 font_data = ExtResource( 12 )
 
-[sub_resource type="DynamicFont" id=10]
+[sub_resource type="DynamicFont" id=11]
 extra_spacing_top = 5
 font_data = ExtResource( 12 )
 
-[sub_resource type="SpriteFrames" id=11]
+[sub_resource type="SpriteFrames" id=12]
 animations = [ {
 "frames": [ null, ExtResource( 18 ) ],
 "loop": true,
@@ -72,10 +84,10 @@ animations = [ {
 "speed": 3.0
 } ]
 
-[sub_resource type="DynamicFont" id=12]
+[sub_resource type="DynamicFont" id=13]
 font_data = ExtResource( 12 )
 
-[sub_resource type="DynamicFont" id=13]
+[sub_resource type="DynamicFont" id=14]
 font_data = ExtResource( 12 )
 
 [node name="Main" type="Node2D"]
@@ -87,7 +99,7 @@ __meta__ = {
 [node name="Player" parent="." groups=[
 "Player",
 ] instance=ExtResource( 1 )]
-position = Vector2( 576.078, 462.206 )
+position = Vector2( 576.8, 466.001 )
 
 [node name="Level1" parent="." instance=ExtResource( 3 )]
 
@@ -112,27 +124,41 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="Door" type="Sprite" parent="Hub/EscapeDoor"]
-modulate = Color( 0.258824, 0.254902, 0.0352941, 1 )
+[node name="Door" type="AnimatedSprite" parent="Hub/EscapeDoor"]
+self_modulate = Color( 0.258824, 0.254902, 0.0352941, 1 )
 z_index = -1
-texture = ExtResource( 7 )
+frames = SubResource( 1 )
+
+[node name="outer_heaven" type="Sprite" parent="Hub/EscapeDoor/Door"]
+modulate = Color( 0.368627, 0.890196, 0.992157, 1 )
+show_behind_parent = true
+position = Vector2( 0.419236, -0.0295726 )
+scale = Vector2( 0.440822, 0.935856 )
+z_index = -1
+z_as_relative = false
+texture = ExtResource( 26 )
 
 [node name="DoorTrigger" type="Area2D" parent="Hub/EscapeDoor"]
+visible = false
+__meta__ = {
+"_edit_group_": true,
+"_edit_lock_": true
+}
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hub/EscapeDoor/DoorTrigger"]
-shape = SubResource( 1 )
+shape = SubResource( 2 )
 
 [node name="Console" type="AnimatedSprite" parent="Hub/EscapeDoor"]
 modulate = Color( 0.258824, 0.254902, 0.0352941, 1 )
 position = Vector2( 22.6221, 0 )
 z_index = -1
-frames = SubResource( 4 )
+frames = SubResource( 5 )
 
 [node name="ConsoleTrigger" type="Area2D" parent="Hub/EscapeDoor"]
 position = Vector2( 22.8589, 0.0592651 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hub/EscapeDoor/ConsoleTrigger"]
-shape = SubResource( 5 )
+shape = SubResource( 6 )
 
 [node name="need" type="Sprite" parent="Hub/EscapeDoor"]
 visible = false
@@ -145,6 +171,18 @@ visible = false
 position = Vector2( 35.9563, -22.7986 )
 scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 15 )
+
+[node name="press" type="Sprite" parent="Hub/EscapeDoor"]
+visible = false
+position = Vector2( 16.75, -18.625 )
+scale = Vector2( 0.25, 0.25 )
+texture = ExtResource( 23 )
+
+[node name="f" type="Sprite" parent="Hub/EscapeDoor"]
+visible = false
+position = Vector2( 31.2031, -18.5782 )
+scale = Vector2( 0.25, 0.25 )
+texture = ExtResource( 25 )
 
 [node name="LevelManager" parent="Hub" instance=ExtResource( 5 )]
 
@@ -166,7 +204,7 @@ __meta__ = {
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hub/LevelManager3/Loader"]
 position = Vector2( 0, 8 )
-shape = SubResource( 6 )
+shape = SubResource( 7 )
 
 [node name="Unloader" type="Area2D" parent="Hub/LevelManager3"]
 modulate = Color( 0, 0.0156863, 1, 1 )
@@ -176,7 +214,7 @@ __meta__ = {
 }
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Hub/LevelManager3/Unloader"]
-shape = SubResource( 7 )
+shape = SubResource( 8 )
 
 [node name="Start1" type="Position2D" parent="Hub"]
 position = Vector2( 576, 464 )
@@ -266,7 +304,7 @@ margin_left = 371.499
 margin_top = 474.0
 margin_right = 786.499
 margin_bottom = 547.0
-custom_fonts/font = SubResource( 8 )
+custom_fonts/font = SubResource( 9 )
 custom_colors/font_color = Color( 0.203922, 0.678431, 0, 1 )
 text = "Game by: sudoDavi
 Music by: ohhcurtains
@@ -286,7 +324,7 @@ mouse_default_cursor_shape = 2
 [node name="Label" type="Label" parent="Ui/MainMenu/Play"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-custom_fonts/font = SubResource( 9 )
+custom_fonts/font = SubResource( 10 )
 custom_colors/font_color = Color( 0.203922, 0.678431, 0, 1 )
 text = ">Play"
 autowrap = true
@@ -304,7 +342,7 @@ __meta__ = {
 [node name="Label" type="Label" parent="Ui/MainMenu/Resume"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-custom_fonts/font = SubResource( 9 )
+custom_fonts/font = SubResource( 10 )
 custom_colors/font_color = Color( 0.203922, 0.678431, 0, 1 )
 text = ">Resume"
 autowrap = true
@@ -322,7 +360,7 @@ __meta__ = {
 [node name="Label" type="Label" parent="Ui/MainMenu/Quit"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-custom_fonts/font = SubResource( 9 )
+custom_fonts/font = SubResource( 10 )
 custom_colors/font_color = Color( 0.203922, 0.678431, 0, 1 )
 text = ">Quit"
 autowrap = true
@@ -332,7 +370,7 @@ margin_left = 373.458
 margin_top = 303.142
 margin_right = 1018.46
 margin_bottom = 448.142
-custom_fonts/font = SubResource( 10 )
+custom_fonts/font = SubResource( 11 )
 text = "Controls:
 W or Up arrow for jumping
 A, S or Left, Right arrows for movement
@@ -374,7 +412,7 @@ __meta__ = {
 [node name="AnimatedSprite" type="AnimatedSprite" parent="Ui/EndScreen"]
 position = Vector2( 501.394, 152.553 )
 scale = Vector2( 3.2, 3.2 )
-frames = SubResource( 11 )
+frames = SubResource( 12 )
 playing = true
 
 [node name="GameUI" type="Control" parent="Ui"]
@@ -439,7 +477,7 @@ margin_left = -0.912003
 margin_top = 0.199997
 margin_right = 1.33599
 margin_bottom = -0.200005
-custom_fonts/font = SubResource( 12 )
+custom_fonts/font = SubResource( 13 )
 autowrap = true
 __meta__ = {
 "_edit_use_anchors_": true
@@ -460,7 +498,7 @@ margin_left = -288.0
 margin_top = -17.5
 margin_right = 288.0
 margin_bottom = 17.5
-custom_fonts/font = SubResource( 13 )
+custom_fonts/font = SubResource( 14 )
 text = "You died.
 Now live again to discover yourself!"
 align = 1
